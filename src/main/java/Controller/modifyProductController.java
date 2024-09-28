@@ -47,6 +47,7 @@ private TableColumn<Part, Integer>  partCost;
 private TextField partSearchTextField;
 @FXML
 private Product selectedProduct;
+@FXML TableView<Part> productPartTable;
 private int productIndex;
 
 public void setMainControllerRef(mainController mainController) {
@@ -129,9 +130,7 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
         if (newValue == null || newValue.isEmpty()) {
             return true;
         }
-
         String lowerCaseFilter = newValue.toLowerCase();
-
         // Compare all part attributes with the search text
         return part.getName().toLowerCase().contains(lowerCaseFilter)
                 || String.valueOf(part.getId()).contains(lowerCaseFilter);
@@ -143,5 +142,12 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
 
     // Set the sorted list as the items of the partTable
     partTable.setItems(sortedPartList);
+
+    //method from java main controller
+    Controller.mainController.productPartAddMethod(partID, partName, partInventory, partCost, productPartTable);
+    var filteredPartList2 = new FilteredList<>(Product.getAllAssociatedParts(), p -> true);
+    SortedList<Part> sortedPartList2 = new SortedList<>(filteredPartList2);
+    sortedPartList2.comparatorProperty().bind(productPartTable.comparatorProperty());
+    productPartTable.setItems(sortedPartList2);
 }
 }

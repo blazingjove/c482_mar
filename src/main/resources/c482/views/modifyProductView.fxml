@@ -34,7 +34,7 @@
             </columns>
 
         </TableView>
-        <TableView layoutX="423.0" layoutY="318.0" prefHeight="200.0" prefWidth="450.0">
+        <TableView fx:id="productPartTable" layoutX="423.0" layoutY="318.0" prefHeight="200.0" prefWidth="450.0">
             <columns>
                 <TableColumn prefWidth="79.0" text="Part ID" />
                 <TableColumn prefWidth="113.0" text="Part Name" />

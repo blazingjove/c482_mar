@@ -18,7 +18,6 @@ import java.util.ResourceBundle;
 public class addProductController implements Initializable {
     @FXML
     public AnchorPane addProductPane;
-    public TableView productPartTable;
     private mainController mainController; // Reference to the main controller
     public void setMainControllerRef(mainController mainController) {
         this.mainController = mainController;
@@ -48,6 +47,9 @@ public class addProductController implements Initializable {
     private TableColumn<Part, Integer>  partCost;
     @FXML
     private TextField partSearchTextField;
+    @FXML
+    private TableView<Part> productPartTable;
+
 
     @FXML
     public void onProductSaveButtonClicked() {
@@ -75,11 +77,13 @@ public class addProductController implements Initializable {
 
 /*TODO ADD CODE FOR SELECTED PART TO BE ADDED TO PRODUCT AND THE TABLE
  */
+
+    private static int lastAssignedId = 0;
+
     public void onProductAddButtonClicked() {
         Part selectedPart = partTable.getSelectionModel().getSelectedItem();
-        //int selectedIndex = partTable.getSelectionModel().getSelectedIndex();
         System.out.println(selectedPart.getName()+ " added to table");
-        Model.Product.addAssociatedPart(selectedPart);
+        Product.addAssociatedPart(selectedPart);
         System.out.println(Product.getAllAssociatedParts());
     }
 
@@ -95,7 +99,8 @@ public class addProductController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Add product Initialized");
-
+        //clear selected items from previous item modification or creation
+        Product.getAllAssociatedParts().clear();
         //method from mainController.java
         Controller.mainController.partTableMethod(partID, partName, partInventory, partCost, partTable);
 
@@ -107,9 +112,7 @@ public class addProductController implements Initializable {
             if (newValue == null || newValue.isEmpty()) {
                 return true;
             }
-
             String lowerCaseFilter = newValue.toLowerCase();
-
             // Compare all part attributes with the search text
             return part.getName().toLowerCase().contains(lowerCaseFilter)
                     || String.valueOf(part.getId()).contains(lowerCaseFilter);
@@ -121,6 +124,10 @@ public class addProductController implements Initializable {
 
         partTable.setItems(sortedPartList);
 
+        //TODO need to modify part add method so data are added appropriately
+        //method from java main controller to populate parts added to product
+        Controller.mainController.productPartAddMethod(partID, partName, partInventory, partCost, productPartTable);
+        productPartTable.setItems(Product.getAllAssociatedParts());
     }
 }
 
