@@ -56,7 +56,6 @@ public class modifyPartController implements Initializable {
         // Call a method to display the selected part's data in the fields
         displaySelectedPartData();
     }
-
     private void displaySelectedPartData() {
         // Set the appropriate label based on the part being in house or outsourced
         if (selectedPart instanceof InHouse) {

@@ -90,6 +90,7 @@ public class addPartController implements Initializable {
             errorAlert.showAndWait();
             return;
         }
+
         //closes window once part is successfully added
         stage = (Stage) addPartPane.getScene().getWindow();
         System.out.println("Part Added");

@@ -74,7 +74,7 @@ private void displaySelectedProductData() {
         System.out.println(Product.getAllAssociatedParts());
     }
     public void onProductRemoveButtonClicked() {
-        Part selectedPart = partTable.getSelectionModel().getSelectedItem();
+        Part selectedPart = productPartTable.getSelectionModel().getSelectedItem();
         Product.deleteAssociatedPart(selectedPart);
     }
 

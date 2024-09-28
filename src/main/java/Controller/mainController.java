@@ -277,5 +277,4 @@ public static void  productPartAddMethod(TableColumn<Part, Integer> partID2, Tab
     partCost2.setCellValueFactory(new PropertyValueFactory<>("price"));
     productPartTable.setItems(Product.getAllAssociatedParts());
 }
-
 }

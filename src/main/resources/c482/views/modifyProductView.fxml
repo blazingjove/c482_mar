@@ -12,14 +12,14 @@
         <TextField fx:id="productCostField" layoutX="97.0" layoutY="213.0" prefHeight="25.0" prefWidth="96.0" />
         <TextField fx:id="productMaxField" layoutX="97.0" layoutY="248.0" prefHeight="25.0" prefWidth="96.0" />
         <TextField fx:id="productMinField" layoutX="251.0" layoutY="248.0" prefHeight="25.0" prefWidth="52.0" />
-        <Label layoutX="24.0" layoutY="27.0" text="Add Product">
+        <Label layoutX="24.0" layoutY="27.0" text="Modify Product">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Label>
         <Label layoutX="28.0" layoutY="99.0" text="ID" />
         <Label layoutX="28.0" layoutY="138.0" text="Name" />
-        <Label layoutX="28.0" layoutY="178.0" text="Inv" />
+        <Label layoutX="28.0" layoutY="178.0" text="Inventory" />
         <Label layoutX="28.0" layoutY="217.0" text="Price/Cost" />
         <Label layoutX="28.0" layoutY="252.0" text="Max" />
         <Button layoutX="697.0" layoutY="589.0" mnemonicParsing="false" onAction="#onModifySaveButtonClicked" prefHeight="24.0" prefWidth="63.0" text="Save" />

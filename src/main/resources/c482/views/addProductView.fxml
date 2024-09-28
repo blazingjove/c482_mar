@@ -19,7 +19,7 @@
         </Label>
         <Label layoutX="28.0" layoutY="99.0" text="ID" />
         <Label layoutX="28.0" layoutY="138.0" text="Name" />
-        <Label layoutX="28.0" layoutY="178.0" text="Inv" />
+        <Label layoutX="28.0" layoutY="178.0" text="Inventory" />
         <Label layoutX="28.0" layoutY="217.0" text="Price/Cost" />
         <Label layoutX="28.0" layoutY="252.0" text="Max" />
         <Button layoutX="696.0" layoutY="589.0" mnemonicParsing="false" onAction="#onProductSaveButtonClicked" prefHeight="24.0" prefWidth="63.0" text="Save" />

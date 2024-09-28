@@ -61,7 +61,6 @@ public class addProductController implements Initializable {
         }
     }
 
-    //initial value if a new part is assigned to product it will begin at index 1 and increment by one for every item added
     public void onProductAddButtonClicked() {
         Part selectedPart = partTable.getSelectionModel().getSelectedItem();
         System.out.println(selectedPart.getName()+ " added to product's table");
@@ -70,7 +69,7 @@ public class addProductController implements Initializable {
     }
 
     public void onProductRemoveButtonClicked() {
-        Part selectedPart = partTable.getSelectionModel().getSelectedItem();
+        Part selectedPart = productPartTable.getSelectionModel().getSelectedItem();
         Product.deleteAssociatedPart(selectedPart);
     }
 

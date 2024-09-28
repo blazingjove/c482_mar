@@ -28,7 +28,7 @@
         </Label>
         <Label layoutX="118.0" layoutY="100.0" text="ID" />
         <Label layoutX="118.0" layoutY="139.0" text="Name" />
-        <Label layoutX="118.0" layoutY="179.0" text="Inv" />
+        <Label layoutX="118.0" layoutY="179.0" text="Inventory" />
         <Label layoutX="118.0" layoutY="218.0" text="Price/Cost" />
         <Label layoutX="118.0" layoutY="253.0" text="Max" />
         <Button layoutX="483.0" layoutY="320.0" mnemonicParsing="false" onAction="#onModifyPartExitClicked" text="Cancel" />
