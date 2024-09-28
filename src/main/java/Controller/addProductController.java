@@ -42,8 +42,6 @@ public class addProductController implements Initializable {
     @FXML private TableColumn<Part, Integer>  partInventory2;
     @FXML private TableColumn<Part, Integer>  partCost2;
 
-
-
     public void onProductSaveButtonClicked() {
         String name = productNameField.getText();
         double price = Double.parseDouble(productCostField.getText());
@@ -67,12 +65,10 @@ public class addProductController implements Initializable {
         }
     }
     //initial value if a new part is assigned to product it will begin at index 1 and increment by one for every item added
-    private static int lastAssignedId = 0;
 
     public void onProductAddButtonClicked() {
         Part selectedPart = partTable.getSelectionModel().getSelectedItem();
         System.out.println(selectedPart.getName()+ " added to product's table");
-        selectedPart.setId(++lastAssignedId);
         Product.addAssociatedPart(selectedPart);
         System.out.println(Product.getAllAssociatedParts());
     }

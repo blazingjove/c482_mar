@@ -21,33 +21,24 @@ public class modifyProductController implements Initializable {
 public AnchorPane modifyProductPane;
 private Controller.mainController mainController; // Reference to the main controller
 //text fields for user inputs
-@FXML
-private TextField productIdField;
-@FXML
-private TextField productNameField;
-@FXML
-private TextField productInventoryField;
-@FXML
-private TextField productCostField;
-@FXML
-private TextField productMaxField;
-@FXML
-private TextField productMinField;
-@FXML
-private TableView<Part> partTable;
-@FXML
-private TableColumn<Part, Integer> partID;
-@FXML
-private TableColumn<Part, Integer>  partName;
-@FXML
-private TableColumn<Part, Integer>  partInventory;
-@FXML
-private TableColumn<Part, Integer>  partCost;
-@FXML
-private TextField partSearchTextField;
-@FXML
-private Product selectedProduct;
+@FXML private TextField productIdField;
+@FXML private TextField productNameField;
+@FXML private TextField productInventoryField;
+@FXML private TextField productCostField;
+@FXML private TextField productMaxField;
+@FXML private TextField productMinField;
+@FXML private TableView<Part> partTable;
+@FXML private TableColumn<Part, Integer> partID;
+@FXML private TableColumn<Part, Integer>  partName;
+@FXML private TableColumn<Part, Integer>  partInventory;
+@FXML private TableColumn<Part, Integer>  partCost;
+@FXML private TextField partSearchTextField;
+@FXML private Product selectedProduct;
 @FXML TableView<Part> productPartTable;
+@FXML private TableColumn<Part, Integer> partID2;
+@FXML private TableColumn<Part, Integer>  partName2;
+@FXML private TableColumn<Part, Integer>  partInventory2;
+@FXML private TableColumn<Part, Integer>  partCost2;
 private int productIndex;
 
 public void setMainControllerRef(mainController mainController) {
@@ -75,6 +66,19 @@ private void displaySelectedProductData() {
     System.out.println(selectedProduct.getId());
 
 }
+    //initial value if a new part is assigned to product it will begin at index 1 and increment by one for every item added
+
+    public void onProductAddButtonClicked() {
+        Part selectedPart = partTable.getSelectionModel().getSelectedItem();
+        System.out.println(selectedPart.getName()+ " added to product's table");
+        Product.addAssociatedPart(selectedPart);
+        System.out.println(Product.getAllAssociatedParts());
+    }
+
+    public void onProductRemoveButtonClicked() {
+        Part selectedPart = partTable.getSelectionModel().getSelectedItem();
+        Product.deleteAssociatedPart(selectedPart);
+    }
 
 //code closes the modify part view and opens main when clicked
 public void modifyProductExitClicked (ActionEvent actionEvent){
@@ -121,7 +125,8 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
     System.out.println("modify product Initialized /n");
     //method from mainController.java
     Controller.mainController.partTableMethod(partID, partName, partInventory, partCost, partTable);
-
+    //clear selected items from previous item modification or creation
+    Product.getAllAssociatedParts().clear();
     // Create a FilteredList and SortedList for the partTable
     var filteredPartList = new FilteredList<Part>(Inventory.getAllParts(), p -> true);
 
@@ -144,7 +149,7 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
     partTable.setItems(sortedPartList);
 
     //method from java main controller
-    Controller.mainController.productPartAddMethod(partID, partName, partInventory, partCost, productPartTable);
+    Controller.mainController.productPartAddMethod(partID2, partName2, partInventory2, partCost2, productPartTable);
     productPartTable.setItems(Product.getAllAssociatedParts());
 }
 }
