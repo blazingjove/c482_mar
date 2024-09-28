@@ -10,12 +10,10 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 import javafx.scene.Scene;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -41,26 +39,16 @@ public void onExitClicked() {
 }
 
 //variables for parts
-@FXML
-private TableView<Part> partTable;
-@FXML
-private TableColumn<Part, Integer> partID;
-@FXML
-private TableColumn<Part, Integer>  partName;
-@FXML
-private TableColumn<Part, Integer>  partInventory;
-@FXML
-private TableColumn<Part, Integer>  partCost;
-@FXML
-private TableView<Product> productTable;
-@FXML
-private TableColumn<Product, Integer>  productID;
-@FXML
-private TableColumn<Product, Integer>  productName;
-@FXML
-private TableColumn<Product, Integer>  productInventory;
-@FXML
-private TableColumn<Product, Integer>  productCost;
+@FXML private TableView<Part> partTable;
+@FXML private TableColumn<Part, Integer> partID;
+@FXML private TableColumn<Part, Integer>  partName;
+@FXML private TableColumn<Part, Integer>  partInventory;
+@FXML private TableColumn<Part, Integer>  partCost;
+@FXML private TableView<Product> productTable;
+@FXML private TableColumn<Product, Integer>  productID;
+@FXML private TableColumn<Product, Integer>  productName;
+@FXML private TableColumn<Product, Integer>  productInventory;
+@FXML private TableColumn<Product, Integer>  productCost;
 
     //add Part button opens add part window
 public void onPartAdd() {
@@ -296,11 +284,11 @@ public static void partTableMethod(TableColumn<Part, Integer> partID, TableColum
     partTable.setItems(Inventory.getAllParts());
 }
 
-public static void  productPartAddMethod(TableColumn<Part, Integer> partID2, TableColumn<Part, Integer> partName, TableColumn<Part, Integer> partInventory, TableColumn<Part, Integer> partCost, TableView<Part> productPartTable) {
+public static void  productPartAddMethod(TableColumn<Part, Integer> partID2, TableColumn<Part, Integer> partName2, TableColumn<Part, Integer> partInventory2, TableColumn<Part, Integer> partCost2, TableView<Part> productPartTable) {
     partID2.setCellValueFactory(new PropertyValueFactory<>("id"));
-    partName.setCellValueFactory(new PropertyValueFactory<>("name"));
-    partInventory.setCellValueFactory(new PropertyValueFactory<>("stock"));
-    partCost.setCellValueFactory(new PropertyValueFactory<>("price"));
+    partName2.setCellValueFactory(new PropertyValueFactory<>("name"));
+    partInventory2.setCellValueFactory(new PropertyValueFactory<>("stock"));
+    partCost2.setCellValueFactory(new PropertyValueFactory<>("price"));
     productPartTable.setItems(Product.getAllAssociatedParts());
 }
 

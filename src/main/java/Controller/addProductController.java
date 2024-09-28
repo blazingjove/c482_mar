@@ -38,6 +38,9 @@ public class addProductController implements Initializable {
     @FXML private TextField partSearchTextField;
     @FXML private TableView<Part> productPartTable;
     @FXML private TableColumn<Part, Integer> partID2;
+    @FXML private TableColumn<Part, Integer>  partName2;
+    @FXML private TableColumn<Part, Integer>  partInventory2;
+    @FXML private TableColumn<Part, Integer>  partCost2;
 
 
 
@@ -63,10 +66,9 @@ public class addProductController implements Initializable {
             mainController.showMainView();
         }
     }
-
-/*TODO ADD CODE FOR SELECTED PART TO BE ADDED TO PRODUCT AND THE TABLE
- */
+    //initial value if a new part is assigned to product it will begin at index 1 and increment by one for every item added
     private static int lastAssignedId = 0;
+
     public void onProductAddButtonClicked() {
         Part selectedPart = partTable.getSelectionModel().getSelectedItem();
         System.out.println(selectedPart.getName()+ " added to product's table");
@@ -74,6 +76,7 @@ public class addProductController implements Initializable {
         Product.addAssociatedPart(selectedPart);
         System.out.println(Product.getAllAssociatedParts());
     }
+
     public void onAddProductExitClicked (){
         stage = (Stage) addProductPane.getScene().getWindow();
         System.out.println("Add product closed");
@@ -111,7 +114,7 @@ public class addProductController implements Initializable {
         partTable.setItems(sortedPartList);
 
         //method from java main controller
-        Controller.mainController.productPartAddMethod(partID2, partName, partInventory, partCost, productPartTable);
+        Controller.mainController.productPartAddMethod(partID2, partName2, partInventory2, partCost2, productPartTable);
         productPartTable.setItems(Product.getAllAssociatedParts());
     }
 }
