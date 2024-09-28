@@ -27,27 +27,17 @@ public class modifyPartController implements Initializable {
         this.mainController = mainController;
     }
     Stage stage;
-
     /** takes information from selected part in mainController and displays in modifyPart view
      */
-
     // Other FXML elements
-    @FXML
-    private TextField partIdField;
-    @FXML
-    private TextField partNameField;
-    @FXML
-    private TextField partInventoryField;
-    @FXML
-    private TextField partCostField;
-    @FXML
-    private TextField partMaxField;
-    @FXML
-    private TextField partMinField;
-    @FXML
-    private TextField partLastField;
-    @FXML
-    private Part selectedPart;
+    @FXML private TextField partIdField;
+    @FXML private TextField partNameField;
+    @FXML private TextField partInventoryField;
+    @FXML private TextField partCostField;
+    @FXML private TextField partMaxField;
+    @FXML private TextField partMinField;
+    @FXML private TextField partLastField;
+    @FXML private Part selectedPart;
 
     /** This method will change the text of the in correspondence with the radio buttons
      */
@@ -78,7 +68,6 @@ public class modifyPartController implements Initializable {
             partLastField.setText(((Outsourced) selectedPart).getCompanyName());
             outsourcedRadioButton.setSelected(true);
         }
-
         // Populate the fields with the selected part's data
         partIdField.setText(Integer.toString(selectedPart.getId()));
         partNameField.setText(selectedPart.getName());
@@ -102,7 +91,6 @@ public class modifyPartController implements Initializable {
             errorAlert.showAndWait();
             return;
         }
-
         int partId = selectedPart.getId();
         String name = partNameField.getText();
         double price = Double.parseDouble(partCostField.getText());
@@ -110,10 +98,8 @@ public class modifyPartController implements Initializable {
         int min = Integer.parseInt(partMinField.getText());
         int max = Integer.parseInt(partMaxField.getText());
         String lastFieldText = partLastField.getText();
-
         // Create an instance of the appropriate subclass based on the selected radio button
         Part modPart;
-
         if (inHouseRadioButton.isSelected()) {
             int machineId = Integer.parseInt(lastFieldText);
             modPart = new InHouse(partId, name, price, stock, min, max, machineId);
@@ -124,10 +110,8 @@ public class modifyPartController implements Initializable {
             // show an error message or take appropriate action
             return;
         }
-
         modPart.setId(partId);
         Inventory.updatePart(selectedIndex ,modPart);
-
         //closes window once part is successfully added
         stage = (Stage) modifyPartPane.getScene().getWindow();
         System.out.println("Part modified");
@@ -138,33 +122,26 @@ public class modifyPartController implements Initializable {
             mainController.showMainView();
         }
     }
-
     // when add part window closed main view will be displayed
     public void onModifyPartExitClicked(ActionEvent actionEvent) {
         stage = (Stage) modifyPartPane.getScene().getWindow();
         System.out.println("Add part closed");
         stage.close();
-
         // Show the main view after closing the "modify Part" window
         if (mainController != null) {
             mainController.showMainView();
         }
     }
-
     //save data and pass to main controller to display on table
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         //Toggle group so only 1 radio button is selected at 1 time
         toggleGroup = new ToggleGroup();
         inHouseRadioButton.setToggleGroup(toggleGroup);
         outsourcedRadioButton.setToggleGroup(toggleGroup);
-
         // Add event listeners for radio buttons
         inHouseRadioButton.selectedProperty().addListener((observable, oldValue, newValue) -> onRadioButtonSelected());
         outsourcedRadioButton.selectedProperty().addListener((observable, oldValue, newValue) -> onRadioButtonSelected());
-
         //notifies user when of modify part view being opened
         System.out.println("modify part Initialized");
     }

@@ -9,12 +9,10 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
 public class addPartController implements Initializable {
     @FXML
     public AnchorPane addPartPane;
     private mainController mainController; // Reference to the main controller
-
     //FXML for toggleGroup so that one radio button  selected at a time
     @FXML
     private ToggleGroup toggleGroup;
@@ -26,22 +24,15 @@ public class addPartController implements Initializable {
     }
     Stage stage;
     //text fields for user input
-    @FXML
-    private TextField partNameField;
-    @FXML
-    private TextField partInventoryField;
-    @FXML
-    private TextField partCostField;
-    @FXML
-    private TextField partMaxField;
-    @FXML
-    private TextField partMinField;
-    @FXML
-    private TextField partLastField;
+    @FXML private TextField partNameField;
+    @FXML private TextField partInventoryField;
+    @FXML private TextField partCostField;
+    @FXML private TextField partMaxField;
+    @FXML private TextField partMinField;
+    @FXML private TextField partLastField;
     public Label lastLabel;
 
-    /** This method will change the text of the in correspondence with the radio buttons
-     */
+    // This method will change the text of the in correspondence with the radio buttons
     @FXML
     private void onRadioButtonSelected() {
         if (inHouseRadioButton.isSelected()) {
@@ -51,12 +42,10 @@ public class addPartController implements Initializable {
         }
     }
 
-    /** this method will save the data and make the appropriate item to be saved in the inventory
-     */
+    //this method will save the data and make the appropriate item to be saved in the inventory
     @FXML
     public void onPartSaveButtonClicked() {
         try {
-
             //error handling for blank sections
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setTitle("Error");
@@ -65,25 +54,20 @@ public class addPartController implements Initializable {
                 errorAlert.showAndWait();
                 return;
             }
-
             String name = partNameField.getText();
             double price = Double.parseDouble(partCostField.getText());
             int stock = Integer.parseInt(partInventoryField.getText());
             int min = Integer.parseInt(partMinField.getText());
             int max = Integer.parseInt(partMaxField.getText());
             String lastFieldText = partLastField.getText();
-
             //error handling making sure correct data is input into the form
             if (min >= max || stock < 0 || stock > max || stock < min) {
                 errorAlert.setContentText("Inventory must be positive and between max and min/ max must be greater than min");
                 errorAlert.showAndWait();
                 return;
             }
-
-
             // Create an instance of the appropriate subclass based on the selected radio button
             Part newPart;
-
             if (inHouseRadioButton.isSelected()) {
                 try {
                     int machineId = Integer.parseInt(lastFieldText);
@@ -96,7 +80,6 @@ public class addPartController implements Initializable {
             } else {
                 newPart = new Outsourced(0, name, price, stock, min, max, lastFieldText);
             }
-
             // Call the addPart method from the Inventory class
             Inventory.addPart(newPart);
         }
@@ -111,20 +94,18 @@ public class addPartController implements Initializable {
         stage = (Stage) addPartPane.getScene().getWindow();
         System.out.println("Part Added");
         stage.close();
-
         // Show the main view after closing the "Add Part" window
         if (mainController != null) {
             mainController.showMainView();
         }
-
     }
 
     // when add part window closed main view will be displayed
+    @FXML
     public void onAddPartExitClicked() {
         stage = (Stage) addPartPane.getScene().getWindow();
         System.out.println("Add part closed");
         stage.close();
-
         // Show the main view after closing the "Add Part" window
         if (mainController != null) {
             mainController.showMainView();
@@ -137,10 +118,8 @@ public class addPartController implements Initializable {
         toggleGroup = new ToggleGroup();
         inHouseRadioButton.setToggleGroup(toggleGroup);
         outsourcedRadioButton.setToggleGroup(toggleGroup);
-
         // Select the "In-House" radio button by default
         inHouseRadioButton.setSelected(true);
-
         // Add event listeners for radio buttons
         inHouseRadioButton.selectedProperty().addListener((observable, oldValue, newValue) -> onRadioButtonSelected());
         outsourcedRadioButton.selectedProperty().addListener((observable, oldValue, newValue) -> onRadioButtonSelected());

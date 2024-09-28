@@ -67,14 +67,12 @@ private void displaySelectedProductData() {
 
 }
     //initial value if a new part is assigned to product it will begin at index 1 and increment by one for every item added
-
     public void onProductAddButtonClicked() {
         Part selectedPart = partTable.getSelectionModel().getSelectedItem();
         System.out.println(selectedPart.getName()+ " added to product's table");
         Product.addAssociatedPart(selectedPart);
         System.out.println(Product.getAllAssociatedParts());
     }
-
     public void onProductRemoveButtonClicked() {
         Part selectedPart = partTable.getSelectionModel().getSelectedItem();
         Product.deleteAssociatedPart(selectedPart);
@@ -98,22 +96,18 @@ public void onModifySaveButtonClicked(ActionEvent actionEvent) {
     int stock = Integer.parseInt(productInventoryField.getText());
     int min = Integer.parseInt(productMinField.getText());
     int max = Integer.parseInt(productMaxField.getText());
-
     //update all sections of part with the values in the text-fields
     selectedProduct.setName(name);
     selectedProduct.setPrice(price);
     selectedProduct.setStock(stock);
     selectedProduct.setMin(min);
     selectedProduct.setMax(max);
-
     // Call the addProduct method from the Inventory class
     Inventory.updateProduct(productIndex, selectedProduct);
-
     //closes window once product is successfully added
     stage = (Stage) modifyProductPane.getScene().getWindow();
     System.out.println("Product Added");
     stage.close();
-
     // Show the main view after closing the "Add Part" window
     if (mainController != null) {
         mainController.showMainView();
@@ -126,10 +120,8 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
     //method from mainController.java
     Controller.mainController.partTableMethod(partID, partName, partInventory, partCost, partTable);
     //clear selected items from previous item modification or creation
-
     // Create a FilteredList and SortedList for the partTable
     var filteredPartList = new FilteredList<Part>(Inventory.getAllParts(), p -> true);
-
     // Bind the filtered list to the partSearchTextField text property
     partSearchTextField.textProperty().addListener((observable, oldValue, newValue) -> filteredPartList.setPredicate(part -> {
         if (newValue == null || newValue.isEmpty()) {
@@ -140,14 +132,11 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
         return part.getName().toLowerCase().contains(lowerCaseFilter)
                 || String.valueOf(part.getId()).contains(lowerCaseFilter);
     }));
-
     // Create a SortedList to display the filtered items in the table
     SortedList<Part> sortedPartList = new SortedList<>(filteredPartList);
     sortedPartList.comparatorProperty().bind(partTable.comparatorProperty());
-
     // Set the sorted list as the items of the partTable
     partTable.setItems(sortedPartList);
-
     //method from java main controller
     Controller.mainController.productPartAddMethod(partID2, partName2, partInventory2, partCost2, productPartTable);
     productPartTable.setItems(Product.getAllAssociatedParts());

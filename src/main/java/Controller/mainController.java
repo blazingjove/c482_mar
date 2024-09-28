@@ -23,7 +23,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 
 public class mainController implements Initializable{
-
 // blow is the logic to exit main view when exit button is hit
 @FXML
 private AnchorPane mainPane;
@@ -109,7 +108,6 @@ public void onPartModify() {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }else{
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         errorAlert.setTitle("Error");
@@ -171,14 +169,11 @@ public void onProductAdd(){
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
         stage.setScene(scene);
-
         // Pass the mainController reference to addPartController
         addProductController addProductController = fxmlLoader.getController();
         addProductController.setMainControllerRef(this);
-
         //hide the main view
         mainPane.getScene().getWindow().hide();
-
         // Show the add product view
         stage.show();
     }         catch (IOException e) {
@@ -197,25 +192,20 @@ public void onProductModify(){
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
         stage.setScene(scene);
-
         // Pass the mainController reference to addPartController
         modifyProductController modifyProductController = fxmlLoader.getController();
         modifyProductController.setMainControllerRef(this);
         modifyProductController.setSelectedProduct(selectedProduct, productIndex);
-
         //hide the main view
         mainPane.getScene().getWindow().hide();
-
         //show on product mod view
         stage.show();
     } catch (IOException e){
         e.printStackTrace();
-
     }} else{Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setTitle("Error");
             errorAlert.setContentText("Please select product to modify");
             errorAlert.showAndWait();}
-
     }
 
 //Listener for part text field search
@@ -234,10 +224,8 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
     productCost.setCellValueFactory(new PropertyValueFactory<>("price"));
     productTable.setItems(Inventory.getAllProducts());
     // Create a FilteredList and SortedList for the partTable
-
     FilteredList<Part> filteredPartList = new FilteredList<>(Inventory.getAllParts(), p -> true);
     // Bind the filtered list to the partSearchTextField text property
-
     partSearchTextField.textProperty().addListener((observable, oldValue, newValue) -> filteredPartList.setPredicate(part -> {
         if (newValue == null || newValue.isEmpty()) {
             return true;
@@ -257,8 +245,7 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
 */
     // Create a FilteredList and SortedList for the ProductTable
     FilteredList<Product> filteredProductList = new FilteredList<>(Inventory.getAllProducts(), p -> true);
-
-// Bind the filtered list to the productSearchTextField text property
+    // Bind the filtered list to the productSearchTextField text property
     productSearchTextField.textProperty().addListener((observable, oldValue, newValue) -> filteredProductList.setPredicate(product -> {
         if (newValue == null || newValue.isEmpty()) {
             return true;
@@ -267,15 +254,14 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
         return product.getName().toLowerCase().contains(lowerCaseFilter)
                 || String.valueOf(product.getId()).contains(lowerCaseFilter);
     }));
-
 // Create a SortedList to display the filtered items in the table
     SortedList<Product> sortedProductList = new SortedList<>(filteredProductList);
     sortedProductList.comparatorProperty().bind(productTable.comparatorProperty());
-
 // Set the sorted list as the items of the product table
     productTable.setItems(sortedProductList);
     System.out.println("program started");
 }
+
 public static void partTableMethod(TableColumn<Part, Integer> partID, TableColumn<Part, Integer> partName, TableColumn<Part, Integer> partInventory, TableColumn<Part, Integer> partCost, TableView<Part> partTable) {
     partID.setCellValueFactory(new PropertyValueFactory<>("id"));
     partName.setCellValueFactory(new PropertyValueFactory<>("name"));
