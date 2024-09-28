@@ -77,6 +77,11 @@ public class addProductController implements Initializable {
         System.out.println(Product.getAllAssociatedParts());
     }
 
+    public void onProductRemoveButtonClicked() {
+        Part selectedPart = partTable.getSelectionModel().getSelectedItem();
+        Product.deleteAssociatedPart(selectedPart);
+    }
+
     public void onAddProductExitClicked (){
         stage = (Stage) addProductPane.getScene().getWindow();
         System.out.println("Add product closed");

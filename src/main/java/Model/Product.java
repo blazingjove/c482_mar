@@ -89,7 +89,7 @@ public class Product {
         associatedParts.add(part);
     }
 
-    public boolean deleteAssociatedPart(Part selectedAssociatedPart){
+    public static boolean deleteAssociatedPart(Part selectedAssociatedPart){
         if(associatedParts.contains(selectedAssociatedPart)){
             associatedParts.remove(selectedAssociatedPart);
             return true;
