@@ -126,7 +126,7 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
     //method from mainController.java
     Controller.mainController.partTableMethod(partID, partName, partInventory, partCost, partTable);
     //clear selected items from previous item modification or creation
-    Product.getAllAssociatedParts().clear();
+
     // Create a FilteredList and SortedList for the partTable
     var filteredPartList = new FilteredList<Part>(Inventory.getAllParts(), p -> true);
 
