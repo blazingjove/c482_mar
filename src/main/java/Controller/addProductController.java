@@ -25,33 +25,22 @@ public class addProductController implements Initializable {
     Stage stage;
 
     //text fields for user inputs
-    @FXML
-    private TextField productNameField;
-    @FXML
-    private TextField productInventoryField;
-    @FXML
-    private TextField productCostField;
-    @FXML
-    private TextField productMaxField;
-    @FXML
-    private TextField productMinField;
-    @FXML
-    private TableView<Part> partTable;
-    @FXML
-    private TableColumn<Part, Integer> partID;
-    @FXML
-    private TableColumn<Part, Integer>  partName;
-    @FXML
-    private TableColumn<Part, Integer>  partInventory;
-    @FXML
-    private TableColumn<Part, Integer>  partCost;
-    @FXML
-    private TextField partSearchTextField;
-    @FXML
-    private TableView<Part> productPartTable;
+    @FXML private TextField productNameField;
+    @FXML private TextField productInventoryField;
+    @FXML private TextField productCostField;
+    @FXML private TextField productMaxField;
+    @FXML private TextField productMinField;
+    @FXML private TableView<Part> partTable;
+    @FXML private TableColumn<Part, Integer> partID;
+    @FXML private TableColumn<Part, Integer>  partName;
+    @FXML private TableColumn<Part, Integer>  partInventory;
+    @FXML private TableColumn<Part, Integer>  partCost;
+    @FXML private TextField partSearchTextField;
+    @FXML private TableView<Part> productPartTable;
+    @FXML private TableColumn<Part, Integer> partID2;
 
 
-    @FXML
+
     public void onProductSaveButtonClicked() {
         String name = productNameField.getText();
         double price = Double.parseDouble(productCostField.getText());
@@ -77,16 +66,14 @@ public class addProductController implements Initializable {
 
 /*TODO ADD CODE FOR SELECTED PART TO BE ADDED TO PRODUCT AND THE TABLE
  */
-
     private static int lastAssignedId = 0;
-
     public void onProductAddButtonClicked() {
         Part selectedPart = partTable.getSelectionModel().getSelectedItem();
-        System.out.println(selectedPart.getName()+ " added to table");
+        System.out.println(selectedPart.getName()+ " added to product's table");
+        selectedPart.setId(++lastAssignedId);
         Product.addAssociatedPart(selectedPart);
         System.out.println(Product.getAllAssociatedParts());
     }
-
     public void onAddProductExitClicked (){
         stage = (Stage) addProductPane.getScene().getWindow();
         System.out.println("Add product closed");
@@ -95,7 +82,6 @@ public class addProductController implements Initializable {
             mainController.showMainView();
         }
     }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Add product Initialized");
@@ -117,16 +103,15 @@ public class addProductController implements Initializable {
             return part.getName().toLowerCase().contains(lowerCaseFilter)
                     || String.valueOf(part.getId()).contains(lowerCaseFilter);
         }));
-
         // Create a SortedList to display the filtered items in the table
         SortedList<Part> sortedPartList = new SortedList<>(filteredPartList);
         sortedPartList.comparatorProperty().bind(partTable.comparatorProperty());
 
+        // Set the sorted list as the items of the partTable
         partTable.setItems(sortedPartList);
 
-        //TODO need to modify part add method so data are added appropriately
-        //method from java main controller to populate parts added to product
-        Controller.mainController.productPartAddMethod(partID, partName, partInventory, partCost, productPartTable);
+        //method from java main controller
+        Controller.mainController.productPartAddMethod(partID2, partName, partInventory, partCost, productPartTable);
         productPartTable.setItems(Product.getAllAssociatedParts());
     }
 }

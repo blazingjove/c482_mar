@@ -145,9 +145,6 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
 
     //method from java main controller
     Controller.mainController.productPartAddMethod(partID, partName, partInventory, partCost, productPartTable);
-    var filteredPartList2 = new FilteredList<>(Product.getAllAssociatedParts(), p -> true);
-    SortedList<Part> sortedPartList2 = new SortedList<>(filteredPartList2);
-    sortedPartList2.comparatorProperty().bind(productPartTable.comparatorProperty());
-    productPartTable.setItems(sortedPartList2);
+    productPartTable.setItems(Product.getAllAssociatedParts());
 }
 }

@@ -62,8 +62,7 @@ private TableColumn<Product, Integer>  productInventory;
 @FXML
 private TableColumn<Product, Integer>  productCost;
 
-//add Part button opens add part window
-@FXML
+    //add Part button opens add part window
 public void onPartAdd() {
     try {
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -297,8 +296,8 @@ public static void partTableMethod(TableColumn<Part, Integer> partID, TableColum
     partTable.setItems(Inventory.getAllParts());
 }
 
-public static void  productPartAddMethod(TableColumn<Part, Integer> partID, TableColumn<Part, Integer> partName, TableColumn<Part, Integer> partInventory, TableColumn<Part, Integer> partCost, TableView<Part> productPartTable) {
-    partID.setCellValueFactory(new PropertyValueFactory<>("id"));
+public static void  productPartAddMethod(TableColumn<Part, Integer> partID2, TableColumn<Part, Integer> partName, TableColumn<Part, Integer> partInventory, TableColumn<Part, Integer> partCost, TableView<Part> productPartTable) {
+    partID2.setCellValueFactory(new PropertyValueFactory<>("id"));
     partName.setCellValueFactory(new PropertyValueFactory<>("name"));
     partInventory.setCellValueFactory(new PropertyValueFactory<>("stock"));
     partCost.setCellValueFactory(new PropertyValueFactory<>("price"));
