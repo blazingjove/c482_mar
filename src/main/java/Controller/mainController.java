@@ -296,4 +296,13 @@ public static void partTableMethod(TableColumn<Part, Integer> partID, TableColum
     partCost.setCellValueFactory(new PropertyValueFactory<>("price"));
     partTable.setItems(Inventory.getAllParts());
 }
+
+public static void  productPartAddMethod(TableColumn<Part, Integer> partID, TableColumn<Part, Integer> partName, TableColumn<Part, Integer> partInventory, TableColumn<Part, Integer> partCost, TableView<Part> partTable) {
+    partID.setCellValueFactory(new PropertyValueFactory<>("id"));
+    partName.setCellValueFactory(new PropertyValueFactory<>("name"));
+    partInventory.setCellValueFactory(new PropertyValueFactory<>("stock"));
+    partCost.setCellValueFactory(new PropertyValueFactory<>("price"));
+    partTable.setItems(Product.getAllAssociatedParts());
+}
+
 }
