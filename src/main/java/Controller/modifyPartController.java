@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class modifyPartController implements Initializable {
@@ -90,6 +91,7 @@ public class modifyPartController implements Initializable {
             errorAlert.showAndWait();
             return;
         }
+        // parsing data in the window and assigning it to variables for storage
         int partId = selectedPart.getId();
         String name = partNameField.getText();
         double price = Double.parseDouble(partCostField.getText());
@@ -97,6 +99,30 @@ public class modifyPartController implements Initializable {
         int min = Integer.parseInt(partMinField.getText());
         int max = Integer.parseInt(partMaxField.getText());
         String lastFieldText = partLastField.getText();
+
+        //making sure the inventory is between max and min, and that min is lower than max
+        if (min >= max || stock < 0 || min < 0 || max < 0||  stock > max || stock < min) {
+            errorAlert.setContentText("Inventory must be positive and between max and min & max must be greater than min");
+            errorAlert.showAndWait();
+            return;
+        }
+        //verifying that the price is positive
+        if (price < 0) {
+            errorAlert.setContentText("Price must be an integer greater than or equal to 0");
+            errorAlert.showAndWait();
+            return;
+        }
+        //limiting the price to 2 decimal places
+        String priceAssString = Double.toString(price);
+        int decimalIndex = priceAssString.indexOf(".");
+        // Count characters after the decimal point and throw error if more than two found
+        int digitsAfterDecimal = priceAssString.length() - decimalIndex - 1;
+        if (digitsAfterDecimal > 2) {
+            errorAlert.setContentText("Number of digits after decimal greater than 2, please enter a valid price");
+            errorAlert.showAndWait();
+            return;
+        }
+
         // Create an instance of the appropriate subclass based on the selected radio button
         Part modPart;
         if (inHouseRadioButton.isSelected()) {

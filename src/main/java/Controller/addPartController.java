@@ -61,8 +61,25 @@ public class addPartController implements Initializable {
             int max = Integer.parseInt(partMaxField.getText());
             String lastFieldText = partLastField.getText();
             //error handling making sure correct data is input into the form
-            if (min >= max || stock < 0 || stock > max || stock < min) {
+            if ((min >= max || stock < 0 || min < 0 || max < 0||  stock > max || stock < min)) {
                 errorAlert.setContentText("Inventory must be positive and between max and min/ max must be greater than min");
+                errorAlert.showAndWait();
+                return;
+            }
+            //verifying that the price is positive
+            if (price < 0){
+                errorAlert.setContentText("Price must be an integer greater than or equal to 0");
+                errorAlert.showAndWait();
+                return;
+            }
+
+            //limiting the price to 2 decimal places
+            String priceAssString = Double.toString(price);
+            int decimalIndex = priceAssString.indexOf(".");
+            // Count characters after the decimal point and throw error if more than two found
+            int digitsAfterDecimal = priceAssString.length() - decimalIndex - 1;
+            if (digitsAfterDecimal > 2) {
+                errorAlert.setContentText("Number of digits after decimal greater than 2, please enter a valid price");
                 errorAlert.showAndWait();
                 return;
             }
