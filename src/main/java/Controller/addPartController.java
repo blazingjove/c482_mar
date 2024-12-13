@@ -100,10 +100,10 @@ public class addPartController implements Initializable {
             // Call the addPart method from the Inventory class
             Inventory.addPart(newPart);
         }
-        catch (NumberFormatException e) {
+        catch (Exception e) {
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setTitle("Error");
-            errorAlert.setContentText("Please provide a numerical value");
+            errorAlert.setContentText("Please verify that the values for inventory, price, max, and min are numbers");
             errorAlert.showAndWait();
             return;
         }
