@@ -7,6 +7,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -43,14 +44,56 @@ public class addProductController implements Initializable {
     @FXML private TableColumn<Part, Integer>  partCost2;
 
     public void onProductSaveButtonClicked() {
-        String name = productNameField.getText();
-        double price = Double.parseDouble(productCostField.getText());
-        int stock = Integer.parseInt(productInventoryField.getText());
-        int min = Integer.parseInt(productMinField.getText());
-        int max = Integer.parseInt(productMaxField.getText());
-        Product newProduct = new Product(0,name, price, stock,min,max);
-        // Call the addProduct method from the Inventory class
-        Inventory.addProduct(newProduct);
+        try {
+            //error handling for blank sections
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Error");
+            if (productCostField.getText().isEmpty() || productInventoryField.getText().isEmpty() || productMinField.getText().isEmpty() || productMaxField.getText().isEmpty() || productNameField.getText().isEmpty()) {
+                errorAlert.setContentText("Please fill all the fields of the form");
+                errorAlert.showAndWait();
+                return;
+            }
+
+            String name = productNameField.getText();
+            double price = Double.parseDouble(productCostField.getText());
+            int stock = Integer.parseInt(productInventoryField.getText());
+            int min = Integer.parseInt(productMinField.getText());
+            int max = Integer.parseInt(productMaxField.getText());
+            //checking valid max and mins are entered and stock is within those max and min limits
+            if (min >= max || min < 0 || stock > max || stock < min) {
+                errorAlert.setContentText("Inventory must be positive and between max and min/ max must be greater than min");
+                errorAlert.showAndWait();
+                return;
+            }
+            //verifying that the price is positive
+            if (price < 0){
+                errorAlert.setContentText("Price must be an integer greater than or equal to 0");
+                errorAlert.showAndWait();
+                return;
+            }
+            //limiting the price to 2 decimal places
+            String priceAssString = Double.toString(price);
+            int decimalIndex = priceAssString.indexOf(".");
+            // Count characters after the decimal point and throw error if more than two found
+            int digitsAfterDecimal = priceAssString.length() - decimalIndex - 1;
+            if (digitsAfterDecimal > 2) {
+                errorAlert.setContentText("Number of digits after decimal greater than 2, please enter a valid price");
+                errorAlert.showAndWait();
+                return;
+            }
+
+            Product newProduct = new Product(0, name, price, stock, min, max);
+            // Call the addProduct method from the Inventory class
+            Inventory.addProduct(newProduct);
+        }
+        catch (Exception e) {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Error");
+            errorAlert.setContentText("Please verify that the values for inventory, price, max, and min are numbers");
+            errorAlert.showAndWait();
+            return;
+        }
+
         //closes window once product is successfully added
         stage = (Stage) addProductPane.getScene().getWindow();
         System.out.println("Product Added");

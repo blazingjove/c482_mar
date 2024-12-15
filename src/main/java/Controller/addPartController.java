@@ -61,7 +61,7 @@ public class addPartController implements Initializable {
             int max = Integer.parseInt(partMaxField.getText());
             String lastFieldText = partLastField.getText();
             //error handling making sure correct data is input into the form
-            if ((min >= max || stock < 0 || min < 0 || max < 0||  stock > max || stock < min)) {
+            if (min >= max || min < 0 || stock > max || stock < min) {
                 errorAlert.setContentText("Inventory must be positive and between max and min/ max must be greater than min");
                 errorAlert.showAndWait();
                 return;
