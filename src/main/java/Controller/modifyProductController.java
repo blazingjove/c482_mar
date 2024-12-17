@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.net.URL;
@@ -46,12 +47,21 @@ public void setMainControllerRef(mainController mainController) {
 }
 Stage stage;
 
-public void setSelectedProduct(Product selectedProduct, int productIndex) {
-    this.selectedProduct = selectedProduct;
-    this.productIndex = productIndex; // Set the index of the selected part
-    // Call a method to display the selected part's data in the fields
-    displaySelectedProductData();
-}
+    public void setSelectedProduct(Product selectedProduct, int productIndex) {
+        this.selectedProduct = selectedProduct;
+        this.productIndex = productIndex; // Set the index of the selected product
+        displaySelectedProductData();
+
+        // Set cell value factories for the productPartTable
+        partID2.setCellValueFactory(new PropertyValueFactory<>("id"));
+        partName2.setCellValueFactory(new PropertyValueFactory<>("name"));
+        partInventory2.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        partCost2.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        // Populate the table with associated parts
+        productPartTable.setItems(selectedProduct.getAllAssociatedParts());
+    }
+
 
 private void displaySelectedProductData() {
     // Populate the fields with the selected product data
@@ -70,12 +80,12 @@ private void displaySelectedProductData() {
     public void onProductAddButtonClicked() {
         Part selectedPart = partTable.getSelectionModel().getSelectedItem();
         System.out.println(selectedPart.getName()+ " added to product's table");
-        Product.addAssociatedPart(selectedPart);
-        System.out.println(Product.getAllAssociatedParts());
+        selectedProduct.addAssociatedPart(selectedPart);
+        System.out.println(selectedProduct.getAllAssociatedParts());
     }
     public void onProductRemoveButtonClicked() {
         Part selectedPart = productPartTable.getSelectionModel().getSelectedItem();
-        Product.deleteAssociatedPart(selectedPart);
+        selectedProduct.deleteAssociatedPart(selectedPart);
     }
 
 //code closes the modify part view and opens main when clicked
@@ -116,29 +126,25 @@ public void onModifySaveButtonClicked(ActionEvent actionEvent) {
 
 @Override
 public void initialize(URL url, ResourceBundle resourceBundle) {
-    System.out.println("modify product Initialized /n");
-    //method from mainController.java
+    System.out.println("modify product Initialized");
+
+    // Set up partTable filtering
     Controller.mainController.partTableMethod(partID, partName, partInventory, partCost, partTable);
-    //clear selected items from previous item modification or creation
-    // Create a FilteredList and SortedList for the partTable
-    var filteredPartList = new FilteredList<Part>(Inventory.getAllParts(), p -> true);
-    // Bind the filtered list to the partSearchTextField text property
-    partSearchTextField.textProperty().addListener((observable, oldValue, newValue) -> filteredPartList.setPredicate(part -> {
-        if (newValue == null || newValue.isEmpty()) {
-            return true;
-        }
-        String lowerCaseFilter = newValue.toLowerCase();
-        // Compare all part attributes with the search text
-        return part.getName().toLowerCase().contains(lowerCaseFilter)
-                || String.valueOf(part.getId()).contains(lowerCaseFilter);
-    }));
-    // Create a SortedList to display the filtered items in the table
+    var filteredPartList = new FilteredList<>(Inventory.getAllParts(), p -> true);
+
+    partSearchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+        filteredPartList.setPredicate(part -> {
+            if (newValue == null || newValue.isEmpty()) {
+                return true;
+            }
+            String lowerCaseFilter = newValue.toLowerCase();
+            return part.getName().toLowerCase().contains(lowerCaseFilter)
+                    || String.valueOf(part.getId()).contains(lowerCaseFilter);
+        });
+    });
+
     SortedList<Part> sortedPartList = new SortedList<>(filteredPartList);
     sortedPartList.comparatorProperty().bind(partTable.comparatorProperty());
-    // Set the sorted list as the items of the partTable
     partTable.setItems(sortedPartList);
-    //method from java main controller
-    Controller.mainController.productPartAddMethod(partID2, partName2, partInventory2, partCost2, productPartTable);
-    productPartTable.setItems(Product.getAllAssociatedParts());
 }
 }

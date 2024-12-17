@@ -192,7 +192,8 @@ public void onProductModify(){
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
         stage.setScene(scene);
-        // Pass the mainController reference to addPartController
+        // Pass the mainController reference to addProductcontroller
+
         modifyProductController modifyProductController = fxmlLoader.getController();
         modifyProductController.setMainControllerRef(this);
         modifyProductController.setSelectedProduct(selectedProduct, productIndex);
@@ -270,11 +271,11 @@ public static void partTableMethod(TableColumn<Part, Integer> partID, TableColum
     partTable.setItems(Inventory.getAllParts());
 }
 
-public static void  productPartAddMethod(TableColumn<Part, Integer> partID2, TableColumn<Part, Integer> partName2, TableColumn<Part, Integer> partInventory2, TableColumn<Part, Integer> partCost2, TableView<Part> productPartTable) {
+public static void  productPartAddMethod(Product product, TableColumn<Part, Integer> partID2, TableColumn<Part, Integer> partName2, TableColumn<Part, Integer> partInventory2, TableColumn<Part, Integer> partCost2, TableView<Part> productPartTable) {
     partID2.setCellValueFactory(new PropertyValueFactory<>("id"));
     partName2.setCellValueFactory(new PropertyValueFactory<>("name"));
     partInventory2.setCellValueFactory(new PropertyValueFactory<>("stock"));
     partCost2.setCellValueFactory(new PropertyValueFactory<>("price"));
-    productPartTable.setItems(Product.getAllAssociatedParts());
+    productPartTable.setItems(product.getAllAssociatedParts());
 }
 }

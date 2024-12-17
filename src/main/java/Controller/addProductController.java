@@ -43,6 +43,7 @@ public class addProductController implements Initializable {
     @FXML private TableColumn<Part, Integer>  partInventory2;
     @FXML private TableColumn<Part, Integer>  partCost2;
 
+
     public void onProductSaveButtonClicked() {
         try {
             //error handling for blank sections
@@ -59,6 +60,7 @@ public class addProductController implements Initializable {
             int stock = Integer.parseInt(productInventoryField.getText());
             int min = Integer.parseInt(productMinField.getText());
             int max = Integer.parseInt(productMaxField.getText());
+
             //checking valid max and mins are entered and stock is within those max and min limits
             if (min >= max || min < 0 || stock > max || stock < min) {
                 errorAlert.setContentText("Inventory must be positive and between max and min/ max must be greater than min");
@@ -104,16 +106,22 @@ public class addProductController implements Initializable {
         }
     }
 
+    private Product newProduct = new Product(0, "", 0.0, 0, 0, 0);
+
     public void onProductAddButtonClicked() {
         Part selectedPart = partTable.getSelectionModel().getSelectedItem();
-        System.out.println(selectedPart.getName()+ " added to product's table");
-        Product.addAssociatedPart(selectedPart);
-        System.out.println(Product.getAllAssociatedParts());
+        if (selectedPart != null) {
+            newProduct.addAssociatedPart(selectedPart);
+            productPartTable.setItems(newProduct.getAllAssociatedParts());
+            System.out.println(selectedPart.getName() + " added to product's table");
+        } else {
+            System.out.println("No part selected to add.");
+        }
     }
 
     public void onProductRemoveButtonClicked() {
         Part selectedPart = productPartTable.getSelectionModel().getSelectedItem();
-        Product.deleteAssociatedPart(selectedPart);
+        newProduct.deleteAssociatedPart(selectedPart);
     }
 
     public void onAddProductExitClicked (){
@@ -128,7 +136,7 @@ public class addProductController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Add product Initialized");
         //clear selected items from previous item modification or creation to create empty table upon view initialization
-        Product.getAllAssociatedParts().clear();
+        newProduct.getAllAssociatedParts().clear();
         //method from mainController.java
         Controller.mainController.partTableMethod(partID, partName, partInventory, partCost, partTable);
         // Create a FilteredList and SortedList for the partTable
@@ -149,8 +157,8 @@ public class addProductController implements Initializable {
         // Set the sorted list as the items of the partTable
         partTable.setItems(sortedPartList);
         //method from java main controller
-        Controller.mainController.productPartAddMethod(partID2, partName2, partInventory2, partCost2, productPartTable);
-        productPartTable.setItems(Product.getAllAssociatedParts());
+        Controller.mainController.productPartAddMethod(newProduct, partID2, partName2, partInventory2, partCost2, productPartTable);
+        productPartTable.setItems(newProduct.getAllAssociatedParts());
     }
 }
 
