@@ -43,6 +43,9 @@ public class addProductController implements Initializable {
     @FXML private TableColumn<Part, Integer>  partInventory2;
     @FXML private TableColumn<Part, Integer>  partCost2;
 
+    private Product newProduct = new Product(0, "", 0.0, 0, 0, 0);
+
+
     public void onProductSaveButtonClicked() {
         try {
             //error handling for blank sections
@@ -83,7 +86,13 @@ public class addProductController implements Initializable {
                 return;
             }
 
-            Product newProduct = new Product(0, name, price, stock, min, max);
+            // set values of new product to the user input values
+            newProduct.setName(name);
+            newProduct.setPrice(price);
+            newProduct.setStock(stock);
+            newProduct.setMin(min);
+            newProduct.setMax(max);
+
             // Call the addProduct method from the Inventory class
             Inventory.addProduct(newProduct);
         }
@@ -104,8 +113,6 @@ public class addProductController implements Initializable {
             mainController.showMainView();
         }
     }
-
-    private Product newProduct = new Product(0, "", 0.0, 0, 0, 0);
 
     public void onProductAddButtonClicked() {
         Part selectedPart = partTable.getSelectionModel().getSelectedItem();
