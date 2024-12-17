@@ -43,7 +43,6 @@ public class addProductController implements Initializable {
     @FXML private TableColumn<Part, Integer>  partInventory2;
     @FXML private TableColumn<Part, Integer>  partCost2;
 
-
     public void onProductSaveButtonClicked() {
         try {
             //error handling for blank sections
@@ -115,7 +114,10 @@ public class addProductController implements Initializable {
             productPartTable.setItems(newProduct.getAllAssociatedParts());
             System.out.println(selectedPart.getName() + " added to product's table");
         } else {
-            System.out.println("No part selected to add.");
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Error");
+            errorAlert.setContentText("No part selected.");
+            errorAlert.showAndWait();
         }
     }
 

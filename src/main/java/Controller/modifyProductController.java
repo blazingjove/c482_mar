@@ -8,6 +8,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -78,10 +79,17 @@ private void displaySelectedProductData() {
 }
     //initial value if a new part is assigned to product it will begin at index 1 and increment by one for every item added
     public void onProductAddButtonClicked() {
-        Part selectedPart = partTable.getSelectionModel().getSelectedItem();
-        System.out.println(selectedPart.getName()+ " added to product's table");
-        selectedProduct.addAssociatedPart(selectedPart);
-        System.out.println(selectedProduct.getAllAssociatedParts());
+        try {
+            Part selectedPart = partTable.getSelectionModel().getSelectedItem();
+            System.out.println(selectedPart.getName() + " added to product's table");
+            selectedProduct.addAssociatedPart(selectedPart);
+            System.out.println(selectedProduct.getAllAssociatedParts());
+        } catch (Exception e) {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Error");
+            errorAlert.setContentText("Please select a part to add.");
+            errorAlert.showAndWait();
+        }
     }
     public void onProductRemoveButtonClicked() {
         Part selectedPart = productPartTable.getSelectionModel().getSelectedItem();
