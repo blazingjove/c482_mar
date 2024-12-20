@@ -6,6 +6,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 
+/** @author  Marco Alvarez
+ * this class creates an app and configures window contents and dimensions
+ * */
 
 public class main extends Application {
     @Override

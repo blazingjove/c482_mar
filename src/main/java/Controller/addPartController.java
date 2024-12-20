@@ -9,6 +9,11 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * @author Marco Alvarez
+ * Controller class "addPartController" provides logic for addPartView
+ */
+
 public class addPartController implements Initializable {
     @FXML
     public AnchorPane addPartPane;

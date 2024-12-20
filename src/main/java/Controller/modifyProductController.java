@@ -18,6 +18,11 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * @author Marco Alvarez
+ * Controller class "modifyProductController" provides logic for modifyProductView
+ */
+
 public class modifyProductController implements Initializable {
 @FXML
 public AnchorPane modifyProductPane;
@@ -42,6 +47,7 @@ private Controller.mainController mainController; // Reference to the main contr
 @FXML private TableColumn<Part, Integer>  partInventory2;
 @FXML private TableColumn<Part, Integer>  partCost2;
 private int productIndex;
+
 
 public void setMainControllerRef(mainController mainController) {
     this.mainController = mainController;

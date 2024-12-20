@@ -18,8 +18,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
- * Controller class "mainController" provides logic for the main screen of the app
  * @author Marco Alvarez
+ * Controller class "mainController" provides logic for the main screen of the app
  */
 
 public class mainController implements Initializable{

@@ -11,8 +11,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ResourceBundle;
+
+/**
+ * @author Marco Alvarez
+ * Controller class "modifyPartController" provides logic for modifyPartView
+ */
 
 public class modifyPartController implements Initializable {
     private int selectedIndex;
