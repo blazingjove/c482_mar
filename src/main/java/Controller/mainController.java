@@ -77,6 +77,7 @@ public void onPartAdd() {
 public void showMainView() {
     Stage stage = (Stage) mainPane.getScene().getWindow();
     stage.show();
+    productTable.refresh();
 }
 
 // modify part button opens modify part window and closes main temp
@@ -85,7 +86,7 @@ public void showMainView() {
 @FXML
 public void onPartModify() {
     Part selectedPart = partTable.getSelectionModel().getSelectedItem();
-    int selectedIndex = partTable.getSelectionModel().getSelectedIndex();
+    int selectedIndex = Inventory.getAllParts().indexOf(selectedPart);
     if (selectedPart != null) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/c482/views/modifyPartView.fxml"));
@@ -184,7 +185,7 @@ public void onProductAdd(){
 @FXML
 public void onProductModify(){
     Product selectedProduct = productTable.getSelectionModel().getSelectedItem();
-    int productIndex = productTable.getSelectionModel().getSelectedIndex();
+    int productIndex = Inventory.getAllProducts().indexOf(selectedProduct);
     if (selectedProduct != null) {
     try {
         FXMLLoader fxmlLoader = new FXMLLoader();

@@ -107,30 +107,51 @@ public void modifyProductExitClicked (ActionEvent actionEvent){
     }
 }
 
-@FXML
-public void onModifySaveButtonClicked(ActionEvent actionEvent) {
-    String name = productNameField.getText();
-    double price = Double.parseDouble(productCostField.getText());
-    int stock = Integer.parseInt(productInventoryField.getText());
-    int min = Integer.parseInt(productMinField.getText());
-    int max = Integer.parseInt(productMaxField.getText());
-    //update all sections of part with the values in the text-fields
-    selectedProduct.setName(name);
-    selectedProduct.setPrice(price);
-    selectedProduct.setStock(stock);
-    selectedProduct.setMin(min);
-    selectedProduct.setMax(max);
-    // Call the addProduct method from the Inventory class
-    Inventory.updateProduct(productIndex, selectedProduct);
-    //closes window once product is successfully added
-    stage = (Stage) modifyProductPane.getScene().getWindow();
-    System.out.println("Product Added");
-    stage.close();
-    // Show the main view after closing the "Add Part" window
-    if (mainController != null) {
-        mainController.showMainView();
+    @FXML
+    public void onModifySaveButtonClicked(ActionEvent actionEvent) {
+        try {
+            // Parse input fields
+            String name = productNameField.getText();
+            double price = Double.parseDouble(productCostField.getText());
+            int stock = Integer.parseInt(productInventoryField.getText());
+            int min = Integer.parseInt(productMinField.getText());
+            int max = Integer.parseInt(productMaxField.getText());
+
+            // Validate inputs
+            if (min >= max || stock < min || stock > max) {
+                throw new IllegalArgumentException("Inventory must be between min and max, and min must be less than max.");
+            }
+
+            // Update the selectedProduct with new values
+            selectedProduct.setName(name);
+            selectedProduct.setPrice(price);
+            selectedProduct.setStock(stock);
+            selectedProduct.setMin(min);
+            selectedProduct.setMax(max);
+
+            // Call the updateProduct method to replace the existing product in the inventory
+            Inventory.updateProduct(productIndex, selectedProduct);
+
+            // Close the modify product window
+            stage = (Stage) modifyProductPane.getScene().getWindow();
+            System.out.println("Product updated: " + selectedProduct.getName());
+            stage.close();
+
+            if (mainController != null) {
+                mainController.showMainView();
+            }
+
+        } catch (IllegalArgumentException e) {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setContentText(e.getMessage());
+            errorAlert.showAndWait();
+        } catch (Exception e) {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setContentText("Please verify that all fields are filled correctly.");
+            errorAlert.showAndWait();
+        }
     }
-}
+
 
 @Override
 public void initialize(URL url, ResourceBundle resourceBundle) {
