@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 
 /**
  * @author Marco Alvare
+ * supplied class inHouse
  */
 public class InHouse extends Part{
     @FXML

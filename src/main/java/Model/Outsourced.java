@@ -1,8 +1,8 @@
 package Model;
 
 /**
-
  * @author Marco Alvarez
+ * supplied class outsourced
  */
 public class Outsourced extends Part{
 
