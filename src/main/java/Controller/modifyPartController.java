@@ -13,11 +13,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/**
- * @author Marco Alvarez
- * Controller class "modifyPartController" provides logic for modifyPartView
- */
-
+/** Controller class "modifyPartController" provides logic for modifyPartView */
 public class modifyPartController implements Initializable {
     private int selectedIndex;
     public RadioButton inHouseRadioButton;

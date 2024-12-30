@@ -6,11 +6,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-/** @author  Marco Alvarez
- * this class creates an app and configures window contents and dimensions
- * */
-
+/** this class creates the application.*/
 public class main extends Application {
+    /** This is the main method. first method that gets called to create the app with given parameters when you run your java program. */
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("/c482/views/mainView.fxml"));

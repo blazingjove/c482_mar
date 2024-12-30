@@ -18,11 +18,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/**
- * @author Marco Alvarez
- * Controller class "modifyProductController" provides logic for modifyProductView
- */
-
+/** Controller class "modifyProductController" provides logic for modifyProductView */
 public class modifyProductController implements Initializable {
 @FXML
 public AnchorPane modifyProductPane;

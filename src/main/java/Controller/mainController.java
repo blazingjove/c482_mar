@@ -17,11 +17,7 @@ import java.util.ResourceBundle;
 import javafx.scene.Scene;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-/**
- * @author Marco Alvarez
- * Controller class "mainController" provides logic for the main screen of the app
- */
-
+/** Controller class "mainController" provides logic for the main view of the application.*/
 public class mainController implements Initializable{
 // blow is the logic to exit main view when exit button is hit
 @FXML
@@ -161,7 +157,7 @@ public void onProductDelete(){
     }
 }
 
-//opens product add view and closes main temporarily
+/** Opens the addProduct view and closes main view. uses fxml from addProductsView.fxml.*/
 @FXML
 public void onProductAdd(){
     try {
@@ -181,7 +177,7 @@ public void onProductAdd(){
         e.printStackTrace();
     }
 }
-
+/** Opens modifyProduct view and closes the main view. uses fxml from modifyProductView.fxml.*/
 @FXML
 public void onProductModify(){
     Product selectedProduct = productTable.getSelectionModel().getSelectedItem();
@@ -217,6 +213,7 @@ private TextField partSearchTextField;
 @FXML
 private TextField productSearchTextField;
 //initialized command when code is ran
+/** creates and populates part and product table with a search bar.*/
 @Override
 public void initialize(URL url, ResourceBundle resourceBundle) {
     partTableMethod(partID, partName, partInventory, partCost, partTable);

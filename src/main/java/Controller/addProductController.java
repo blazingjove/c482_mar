@@ -16,11 +16,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/**
- * @author Marco Alvarez
- * Controller class "addProductController" provides logic for addProductView
- */
-
+/** Controller class "addProductController" provides logic for addProductView */
 public class addProductController implements Initializable {
     @FXML
     public AnchorPane addProductPane;
