@@ -266,42 +266,70 @@ public class mainController implements Initializable {
         productCost.setCellValueFactory(new PropertyValueFactory<>("price"));
         productTable.setItems(Inventory.getAllProducts());
 
-        // Create a FilteredList and SortedList for the partTable
-        FilteredList<Part> filteredPartList = new FilteredList<>(Inventory.getAllParts(), p -> true);
         // Bind the filtered list to the partSearchTextField text property
-        partSearchTextField.textProperty().addListener((observable, oldValue, newValue) -> filteredPartList.setPredicate(part -> {
-            if (newValue == null || newValue.isEmpty()) {
-                return true;
+        partSearchTextField.setOnKeyPressed(event -> {
+            if (event.getCode().toString().equals("ENTER")) {
+                String searchText = partSearchTextField.getText().toLowerCase();
+
+                // Create a FilteredList based on the search query
+                FilteredList<Part> filteredPartList = new FilteredList<>(Inventory.getAllParts(), part -> {
+                    if (searchText == null || searchText.isEmpty()) {
+                        return true; // Show all parts if the search query is empty
+                    }
+                    return part.getName().toLowerCase().contains(searchText)
+                            || String.valueOf(part.getId()).contains(searchText);
+                });
+
+                // Update the table with the filtered list
+                SortedList<Part> sortedPartList = new SortedList<>(filteredPartList);
+                sortedPartList.comparatorProperty().bind(partTable.comparatorProperty());
+                partTable.setItems(sortedPartList);
+
+                // Show an alert if no matches are found
+                if (filteredPartList.isEmpty() && !searchText.isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("No Matches Found");
+                    alert.setHeaderText(null);
+                    alert.setContentText("No parts match your search query.");
+                    alert.showAndWait();
+                }
             }
-            String lowerCaseFilter = newValue.toLowerCase();
-            // Compare all part attributes with the search text
-            return part.getName().toLowerCase().contains(lowerCaseFilter)
-                    || String.valueOf(part.getId()).contains(lowerCaseFilter);
-        }));
-        // Create a SortedList to display the filtered items in the table
-        SortedList<Part> sortedPartList = new SortedList<>(filteredPartList);
-        sortedPartList.comparatorProperty().bind(partTable.comparatorProperty());
-        // Set the sorted list as the items of the partTable
-        partTable.setItems(sortedPartList);
+        });
+
 /*
  same as  above to filter product text area input in product table
 */
-        // Create a FilteredList and SortedList for the ProductTable
-        FilteredList<Product> filteredProductList = new FilteredList<>(Inventory.getAllProducts(), p -> true);
         // Bind the filtered list to the productSearchTextField text property
-        productSearchTextField.textProperty().addListener((observable, oldValue, newValue) -> filteredProductList.setPredicate(product -> {
-            if (newValue == null || newValue.isEmpty()) {
-                return true;
+        productSearchTextField.setOnKeyPressed(event -> {
+            if (event.getCode().toString().equals("ENTER")) {
+                String searchText = productSearchTextField.getText().toLowerCase();
+
+                // Create a FilteredList based on the search query
+                FilteredList<Product> filteredProductList = new FilteredList<>(Inventory.getAllProducts(), product -> {
+                    if (searchText == null || searchText.isEmpty()) {
+                        return true; // Show all products if the search query is empty
+                    }
+                    return product.getName().toLowerCase().contains(searchText)
+                            || String.valueOf(product.getId()).contains(searchText);
+                });
+
+                // Update the table with the filtered list
+                SortedList<Product> sortedProductList = new SortedList<>(filteredProductList);
+                sortedProductList.comparatorProperty().bind(productTable.comparatorProperty());
+                productTable.setItems(sortedProductList);
+
+                // Show an alert if no matches are found
+                if (filteredProductList.isEmpty() && !searchText.isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("No Matches Found");
+                    alert.setHeaderText(null);
+                    alert.setContentText("No products match your search query.");
+                    alert.showAndWait();
+                }
             }
-            String lowerCaseFilter = newValue.toLowerCase();
-            return product.getName().toLowerCase().contains(lowerCaseFilter)
-                    || String.valueOf(product.getId()).contains(lowerCaseFilter);
-        }));
-// Create a SortedList to display the filtered items in the table
-        SortedList<Product> sortedProductList = new SortedList<>(filteredProductList);
-        sortedProductList.comparatorProperty().bind(productTable.comparatorProperty());
-// Set the sorted list as the items of the product table
-        productTable.setItems(sortedProductList);
+        });
+
+
         System.out.println("program started");
     }
 

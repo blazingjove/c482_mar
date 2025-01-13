@@ -149,23 +149,37 @@ public class addProductController implements Initializable {
         newProduct.getAllAssociatedParts().clear();
         //method from mainController.java
         Controller.mainController.partTableMethod(partID, partName, partInventory, partCost, partTable);
-        // Create a FilteredList and SortedList for the partTable
-        var filteredPartList = new FilteredList<>(Inventory.getAllParts(), p -> true);
-        // Bind the filtered list to the partSearchTextField text property
-        partSearchTextField.textProperty().addListener((observable, oldValue, newValue) -> filteredPartList.setPredicate(part -> {
-            if (newValue == null || newValue.isEmpty()) {
-                return true;
+
+        // part search for table, execute search on enter
+        partSearchTextField.setOnKeyPressed(event -> {
+            if (event.getCode().toString().equals("ENTER")) {
+                String searchText = partSearchTextField.getText().toLowerCase();
+
+                // Create a FilteredList based on the search query
+                FilteredList<Part> filteredPartList = new FilteredList<>(Inventory.getAllParts(), part -> {
+                    if (searchText == null || searchText.isEmpty()) {
+                        return true; // Show all parts if the search query is empty
+                    }
+                    return part.getName().toLowerCase().contains(searchText)
+                            || String.valueOf(part.getId()).contains(searchText);
+                });
+
+                // Update the part table with the filtered list
+                SortedList<Part> sortedPartList = new SortedList<>(filteredPartList);
+                sortedPartList.comparatorProperty().bind(partTable.comparatorProperty());
+                partTable.setItems(sortedPartList);
+
+                // Show an alert if no matches are found
+                if (filteredPartList.isEmpty() && !searchText.isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("No Matches Found");
+                    alert.setHeaderText(null);
+                    alert.setContentText("No parts match your search query.");
+                    alert.showAndWait();
+                }
             }
-            String lowerCaseFilter = newValue.toLowerCase();
-            // Compare all part attributes with the search text
-            return part.getName().toLowerCase().contains(lowerCaseFilter)
-                    || String.valueOf(part.getId()).contains(lowerCaseFilter);
-        }));
-        // Create a SortedList to display the filtered items in the table
-        SortedList<Part> sortedPartList = new SortedList<>(filteredPartList);
-        sortedPartList.comparatorProperty().bind(partTable.comparatorProperty());
-        // Set the sorted list as the items of the partTable
-        partTable.setItems(sortedPartList);
+        });
+
         //method from java main controller
         Controller.mainController.productPartAddMethod(newProduct, partID2, partName2, partInventory2, partCost2, productPartTable);
         productPartTable.setItems(newProduct.getAllAssociatedParts());

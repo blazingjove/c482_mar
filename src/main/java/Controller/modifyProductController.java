@@ -161,21 +161,35 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
 
     // Set up partTable filtering
     Controller.mainController.partTableMethod(partID, partName, partInventory, partCost, partTable);
-    var filteredPartList = new FilteredList<>(Inventory.getAllParts(), p -> true);
 
-    partSearchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-        filteredPartList.setPredicate(part -> {
-            if (newValue == null || newValue.isEmpty()) {
-                return true;
+    //same as addPartController search
+    partSearchTextField.setOnKeyPressed(event -> {
+        if (event.getCode().toString().equals("ENTER")) {
+            String searchText = partSearchTextField.getText().toLowerCase();
+
+            // Create a FilteredList based on the search query
+            FilteredList<Part> filteredPartList = new FilteredList<>(Inventory.getAllParts(), part -> {
+                if (searchText == null || searchText.isEmpty()) {
+                    return true; // Show all parts if the search query is empty
+                }
+                return part.getName().toLowerCase().contains(searchText)
+                        || String.valueOf(part.getId()).contains(searchText);
+            });
+
+            // Update the part table with the filtered list
+            SortedList<Part> sortedPartList = new SortedList<>(filteredPartList);
+            sortedPartList.comparatorProperty().bind(partTable.comparatorProperty());
+            partTable.setItems(sortedPartList);
+
+            // Show an alert if no matches are found
+            if (filteredPartList.isEmpty() && !searchText.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("No Matches Found");
+                alert.setHeaderText(null);
+                alert.setContentText("No parts match your search query.");
+                alert.showAndWait();
             }
-            String lowerCaseFilter = newValue.toLowerCase();
-            return part.getName().toLowerCase().contains(lowerCaseFilter)
-                    || String.valueOf(part.getId()).contains(lowerCaseFilter);
-        });
+        }
     });
-
-    SortedList<Part> sortedPartList = new SortedList<>(filteredPartList);
-    sortedPartList.comparatorProperty().bind(partTable.comparatorProperty());
-    partTable.setItems(sortedPartList);
 }
 }
