@@ -27,6 +27,11 @@ public class mainController implements Initializable {
     /**
      * OnExitClicked closes the main view.
      * Prompts User to confirm before closing window through an alert.
+     * </n>
+     *<b>Future Enhancements</b> </n>
+     *<p>A good improvement would be to save the part and product table to a file and load that information on the programs start.
+     *would need to rework some code but would make the program changes persistent instead of instanced.
+     *</p>
      */
     public void onExitClicked() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit?");
@@ -62,7 +67,12 @@ public class mainController implements Initializable {
     /**
      * 0nPartAdd opens the addPartView.
      * Hides main view if no error detected.
-     * throws error if addPartView can not be opened. */
+     * throws error if addPartView can not be opened.
+     * <p>
+     *     <b>Runtime Errors</b></n>
+     *     Initially had a hard time getting the new scene to open and closing the main scene at the same time.
+     *     Came across the hide scene which would make the main scene visibly invisible to the user so i did not have to close it.
+     * </p>*/
     public void onPartAdd() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -137,6 +147,13 @@ public class mainController implements Initializable {
      * onPartDelete deletes the selected part.
      * If no part is selected alert is shown that alerts user that no part is selected.
      * will also prompt user to confirm the removal of selected part if part is chosen.
+     *
+     * <p>
+     *     <b>Runtime error</b></n>
+     *     Had an error occurring where the part that was selected was not the one being deleted when the delete command was executed.
+     *     I discovered that the index being used was being retained so i defined the part that is selected so that only that part was deleted
+     *     when the command was ran.
+     * </p>
      */
     @FXML
     public void onPartDelete() {
@@ -163,6 +180,11 @@ public class mainController implements Initializable {
      * onProductDelete deletes the selected part.
      * If no part is selected alert is shown that alerts user that no part is selected.
      * will also prompt user to confirm the removal of selected part if part is chosen.
+     * <p>
+     *<b>Runtime error</b></n>
+     * Was incorrectly deleting the products that had a part associated with it. had to add logic so that the program would check
+     * if any product was selected before proceeding. If noting was selected an error was thrown saying as such.
+     * </p>
      */
     @FXML
     public void onProductDelete() {
@@ -208,6 +230,13 @@ public class mainController implements Initializable {
     /**
      * Opens the addProduct view and closes main view.
      * Hides main view if no error detected.
+     * <p>
+     *     <b>Future Improvement</b></n>
+     *     A feature that I am keen on implementing is making the part no available again by if a part is deleted. for example i have 5 items
+     *     1,2,3,4,5 and i delete number 1. if i add a new product the code would add a product with number 6 as its index instead of going to number
+     *     1 which is now available. sure it would require the indexes to be dynamically tracked. not really a large change that benefits function
+     *     more for aesthetics.
+     * </p>
      */
     @FXML
     public void onProductAdd() {
@@ -275,7 +304,15 @@ public class mainController implements Initializable {
 
     /**
      * creates and populates part and product table with a search bar.
-     */
+     * <p>
+     *     <b>Runtime Errors</b></n>
+     *     had trouble table search being limited only to part ID and Name.
+     *</p>
+     *<p>
+     *     <b>Future Enhancements</b></n>
+     *     would like to implement method for the table generation and search so i do not have to copy past code and input
+     *     the appropriate variable for part and product and their respective views.
+     *</p>*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -317,9 +354,6 @@ public class mainController implements Initializable {
             }
         });
 
-/*
- same as  above to filter product text area input in product table
-*/
         // Bind the filtered list to the productSearchTextField text property
         productSearchTextField.setOnKeyPressed(event -> {
             if (event.getCode().toString().equals("ENTER")) {

@@ -7,7 +7,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /** main class creates the application.
- * extends Application*/
+ * extends Application
+ * <b>JAVADOCS located in the following location java/doc/index.html.</b>
+ */
+
+
 public class main extends Application {
     /** This is the main method.
      * first method that gets called to create the app with given parameters when you run your java program.

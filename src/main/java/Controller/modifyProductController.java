@@ -8,14 +8,12 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /** Controller class "modifyProductController" provides logic for modifyProductView */
@@ -93,12 +91,38 @@ private void displaySelectedProductData() {
             errorAlert.showAndWait();
         }
     }
+
+    @FXML
     public void onProductRemoveButtonClicked() {
+        // Get the selected part from the associated parts table
         Part selectedPart = productPartTable.getSelectionModel().getSelectedItem();
-        selectedProduct.deleteAssociatedPart(selectedPart);
+
+        if (selectedPart != null) {
+            // Show confirmation dialog
+            Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmationAlert.setTitle("Remove Associated Part");
+            confirmationAlert.setHeaderText(null);
+            confirmationAlert.setContentText("Are you sure you want to remove this associated part?");
+            Optional<ButtonType> result = confirmationAlert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                // Remove the part if the user confirms
+                selectedProduct.deleteAssociatedPart(selectedPart);
+                productPartTable.setItems(selectedProduct.getAllAssociatedParts());
+                System.out.println("Associated part removed: " + selectedPart.getName());
+            }
+        } else {
+            // Show an error alert if no part is selected
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("No Part Selected");
+            errorAlert.setHeaderText(null);
+            errorAlert.setContentText("Please select a part to remove.");
+            errorAlert.showAndWait();
+        }
     }
 
-//code closes the modify part view and opens main when clicked
+
+    //code closes the modify part view and opens main when clicked
 public void modifyProductExitClicked (ActionEvent actionEvent){
     stage = (Stage) modifyProductPane.getScene().getWindow();
     System.out.println("modify product closed");
