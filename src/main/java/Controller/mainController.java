@@ -166,23 +166,44 @@ public class mainController implements Initializable {
      */
     @FXML
     public void onProductDelete() {
-        //alert will prompt user to confirm or cancel product deletion
+        // Get the selected product
         Product selectedProduct = productTable.getSelectionModel().getSelectedItem();
+
         if (selectedProduct == null) {
+            // Alert if no product is selected
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setTitle("Error");
-            errorAlert.setContentText("Please select product to delete");
+            errorAlert.setHeaderText(null);
+            errorAlert.setContentText("Please select a product to delete.");
             errorAlert.showAndWait();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this product?");
-            alert.setTitle("Delete Product");
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                System.out.println("test 1");
-                Inventory.deleteProduct(selectedProduct);
-            }
+            return;
+        }
+
+        // Check if the product has associated parts
+        if (!selectedProduct.getAllAssociatedParts().isEmpty()) {
+            // Alert if the product has associated parts
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Cannot Delete Product");
+            errorAlert.setHeaderText(null);
+            errorAlert.setContentText("This product has associated parts and cannot be deleted. Remove the associated parts first.");
+            errorAlert.showAndWait();
+            return;
+        }
+
+        // Confirmation alert before deletion
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("Delete Product");
+        confirmationAlert.setHeaderText(null);
+        confirmationAlert.setContentText("Are you sure you want to delete this product?");
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            // Delete the product
+            Inventory.deleteProduct(selectedProduct);
+            System.out.println("Product deleted: " + selectedProduct.getName());
         }
     }
+
 
     /**
      * Opens the addProduct view and closes main view.
