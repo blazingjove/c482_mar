@@ -23,7 +23,7 @@ public class modifyPartController implements Initializable {
     @FXML
     public AnchorPane modifyPartPane;
     private mainController mainController; // Reference to the main controller
-
+    /**Identifies the main controller*/
     public void setMainControllerRef(mainController mainController) {
         this.mainController = mainController;
     }
@@ -40,9 +40,10 @@ public class modifyPartController implements Initializable {
     @FXML private TextField partLastField;
     @FXML private Part selectedPart;
 
+
+    public Label lastLabel;
     /** This method will change the text of the in correspondence with the radio buttons
      */
-    public Label lastLabel;
     @FXML
     private void onRadioButtonSelected() {
         if (inHouseRadioButton.isSelected()) {
@@ -51,12 +52,16 @@ public class modifyPartController implements Initializable {
             lastLabel.setText("Company Name");
         }
     }
+    /**retains the index of the selected part being modified so that if the part is modified it replaced the information of that part*/
     public void setSelectedPart(Part selectedPart, int selectedIndex) {
         this.selectedPart = selectedPart;
         this.selectedIndex = selectedIndex; // Set the index of the selected part
         // Call a method to display the selected part's data in the fields
         displaySelectedPartData();
     }
+
+    /** takes the information from the selected part in the main view and displays that information in the appropriate modiftpartcontroller field.
+     */
     private void displaySelectedPartData() {
         // Set the appropriate label based on the part being in house or outsourced
         if (selectedPart instanceof InHouse) {
@@ -79,7 +84,7 @@ public class modifyPartController implements Initializable {
         System.out.println(selectedPart.getId());
     }
 
-
+    /** takes the information the user selected and saves said information after the information has been parsed for errors*/
     @FXML
     public void onModifyPartSaveClicked() {
         try {
@@ -160,8 +165,8 @@ public class modifyPartController implements Initializable {
             mainController.showMainView();
         }
     }
-    // when add part window closed main view will be displayed
-    public void onModifyPartExitClicked(ActionEvent actionEvent) {
+        /** closes the modifypart view and shows main view*/
+        public void onModifyPartExitClicked(ActionEvent actionEvent) {
         stage = (Stage) modifyPartPane.getScene().getWindow();
         System.out.println("Add part closed");
         stage.close();
@@ -170,7 +175,7 @@ public class modifyPartController implements Initializable {
             mainController.showMainView();
         }
     }
-    //save data and pass to main controller to display on table
+    /** most the initialize logic dedicated to the radio buttons on the modify part view*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Toggle group so only 1 radio button is selected at 1 time

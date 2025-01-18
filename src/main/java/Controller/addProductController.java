@@ -19,6 +19,7 @@ public class addProductController implements Initializable {
     @FXML
     public AnchorPane addProductPane;
     private mainController mainController; // Reference to the main controller
+    /**identifies the main controller in the view*/
     public void setMainControllerRef(mainController mainController) {
         this.mainController = mainController;
     }
@@ -44,7 +45,12 @@ public class addProductController implements Initializable {
 
     private Product newProduct = new Product(0, "", 0.0, 0, 0, 0);
 
-
+    /** Validates user field inputs for errors and passes data into a new product object to be saved and added in the product list
+     * <p>
+     *     <b>Future Improvements</b></n>
+     *     I would like to make the associated part table to combine like items for example if i have two wheels
+     *     it will not take two lines but one line that shows the value two under a column called "no. of items" or something of the like
+     * </p>*/
     public void onProductSaveButtonClicked() {
         try {
             //error handling for blank sections
@@ -103,7 +109,6 @@ public class addProductController implements Initializable {
             return;
         }
 
-        //closes window once product is successfully added
         stage = (Stage) addProductPane.getScene().getWindow();
         System.out.println("Product Added");
         stage.close();
@@ -113,6 +118,7 @@ public class addProductController implements Initializable {
         }
     }
 
+    /**Adds selected part from the parts table to the associated parts table, shows error if no part is selected*/
     public void onProductAddButtonClicked() {
         Part selectedPart = partTable.getSelectionModel().getSelectedItem();
         if (selectedPart != null) {
@@ -127,6 +133,7 @@ public class addProductController implements Initializable {
         }
     }
 
+    /** removes associated part after user is prompted, if no part is selected user is notified through alert.*/
     @FXML
     public void onProductRemoveButtonClicked() {
         // Get the selected part from the associated parts table
@@ -156,7 +163,7 @@ public class addProductController implements Initializable {
         }
     }
 
-
+    /**Closes the addProduct view and opens the main view*/
     public void onAddProductExitClicked (){
         stage = (Stage) addProductPane.getScene().getWindow();
         System.out.println("Add product closed");
@@ -165,6 +172,15 @@ public class addProductController implements Initializable {
             mainController.showMainView();
         }
     }
+
+    /** Initialize code mainly used to set up the part tables and table search function.
+     * <p>
+     *     <b> Runtime Error</b></n>
+     *     I had a problem when creating or modifying an existing product the associated parts from a previous product would persist on the view.
+     *     The problem was that after the product was saved the newProduct variable I used to hold the information and add to the new product list was
+     *     retaining the associated parts even though it did not hold another information so I manually added a command to clear associated parts in the
+     *     initialize method so upon opening either of the product views the associated parts table would be empty.
+     * </p>*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Add product Initialized");

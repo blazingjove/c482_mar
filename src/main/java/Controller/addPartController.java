@@ -20,6 +20,7 @@ public class addPartController implements Initializable {
     public RadioButton inHouseRadioButton;
     public RadioButton outsourcedRadioButton;
 
+    /** identifies the main controller*/
     public void setMainControllerRef(mainController mainController) {
         this.mainController = mainController;
     }
@@ -33,7 +34,12 @@ public class addPartController implements Initializable {
     @FXML private TextField partLastField;
     public Label lastLabel;
 
-    // This method will change the text of the in correspondence with the radio buttons
+    /** the method onRadioButtonSelected is the logic to change the label to show that the add part being added is an in-house or outsourced item
+     * <p>
+     *     <b>runtime error</b></n>
+     *     I had problems identifying a way to change the add part page upon user selecting in-house or outsourced when i came across the method
+     *     used to change the text being displayed and will later used a method that uses the radio button selected to create the appropriate item on the backend.
+     * </p>*/
     @FXML
     private void onRadioButtonSelected() {
         if (inHouseRadioButton.isSelected()) {
@@ -43,7 +49,14 @@ public class addPartController implements Initializable {
         }
     }
 
-    //this method will save the data and make the appropriate item to be saved in the inventory
+    /** onPartSaveButtonClicked takes all the page that is on the add part view and only saves the part after input validation
+     * <p>
+     *     <b>future improvement</b></n>
+     *     I trouble thinking of all the way the inputs can be manipulated so that you can get the code to accept valid inputs
+     *     i believe in the future a better improvement would be to check for specific formatting and data type instead of checking for
+     *     what you dont want and throwing that specific alert. for example checking that the stock is between min and max just have like a slider for stock that limits
+     *     the user to a value between min and max so that they can't make an error.
+     * </p>*/
     @FXML
     public void onPartSaveButtonClicked() {
         try {
@@ -119,7 +132,7 @@ public class addPartController implements Initializable {
         }
     }
 
-    // when add part window closed main view will be displayed
+    /**Exits the addPart view and shows the main view*/
     @FXML
     public void onAddPartExitClicked() {
         stage = (Stage) addPartPane.getScene().getWindow();
@@ -131,6 +144,7 @@ public class addPartController implements Initializable {
         }
     }
 
+    /**initialize on addPart view being opened, most of the code is dedicated to the radio buttons*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Toggle group so only 1 radio button is selected at 1 time

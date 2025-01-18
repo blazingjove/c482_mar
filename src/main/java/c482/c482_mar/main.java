@@ -8,10 +8,8 @@ import java.io.IOException;
 
 /** main class creates the application.
  * extends Application
- * <b>JAVADOCS located in the following location java/doc/index.html.</b>
+ * <b>JAVADOCS located in the following location c482_mar/doc/index.html.</b>
  */
-
-
 public class main extends Application {
     /** This is the main method.
      * first method that gets called to create the app with given parameters when you run your java program.

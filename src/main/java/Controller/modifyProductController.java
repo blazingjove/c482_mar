@@ -42,12 +42,12 @@ private Controller.mainController mainController; // Reference to the main contr
 @FXML private TableColumn<Part, Integer>  partCost2;
 private int productIndex;
 
-
+/** sets the main view*/
 public void setMainControllerRef(mainController mainController) {
     this.mainController = mainController;
 }
 Stage stage;
-
+    /** identifies product and product index, populates the part table as well*/
     public void setSelectedProduct(Product selectedProduct, int productIndex) {
         this.selectedProduct = selectedProduct;
         this.productIndex = productIndex; // Set the index of the selected product
@@ -63,7 +63,7 @@ Stage stage;
         productPartTable.setItems(selectedProduct.getAllAssociatedParts());
     }
 
-
+/** displays the selected product data*/
 private void displaySelectedProductData() {
     // Populate the fields with the selected product data
 
@@ -77,7 +77,7 @@ private void displaySelectedProductData() {
     System.out.println(selectedProduct.getId());
 
 }
-    //initial value if a new part is assigned to product it will begin at index 1 and increment by one for every item added
+    /**adds selected part to associated part table, if not part selected user is alerted.*/
     public void onProductAddButtonClicked() {
         try {
             Part selectedPart = partTable.getSelectionModel().getSelectedItem();
@@ -92,6 +92,8 @@ private void displaySelectedProductData() {
         }
     }
 
+    /**logic to removed associated part table, user is prompted to follow through with the command and if not part is selcted user
+     * is alerted.*/
     @FXML
     public void onProductRemoveButtonClicked() {
         // Get the selected part from the associated parts table
@@ -122,8 +124,8 @@ private void displaySelectedProductData() {
     }
 
 
-    //code closes the modify part view and opens main when clicked
-public void modifyProductExitClicked (ActionEvent actionEvent){
+    /** closes the modiftPorduct view and opens the main view*/
+    public void modifyProductExitClicked (ActionEvent actionEvent){
     stage = (Stage) modifyProductPane.getScene().getWindow();
     System.out.println("modify product closed");
     stage.close();
@@ -133,6 +135,7 @@ public void modifyProductExitClicked (ActionEvent actionEvent){
     }
 }
 
+    /** On button click the inputs are validated before being saved, user is alerted if any discrepancies are detected.*/
     @FXML
     public void onModifySaveButtonClicked(ActionEvent actionEvent) {
         try {
@@ -178,7 +181,7 @@ public void modifyProductExitClicked (ActionEvent actionEvent){
         }
     }
 
-
+    /**more or lesss the same as the add product view, initializing the tables and the search function.*/
 @Override
 public void initialize(URL url, ResourceBundle resourceBundle) {
     System.out.println("modify product Initialized");
