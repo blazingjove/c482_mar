@@ -16,8 +16,11 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-/** Controller class "modifyProductController" provides logic for modifyProductView */
+/**
+ * Controller class "modifyProductController" provides logic for modifyProductView.
+ */
 public class modifyProductController implements Initializable {
+    /**modify product view identified.*/
 @FXML
 public AnchorPane modifyProductPane;
 private Controller.mainController mainController; // Reference to the main controller

@@ -13,13 +13,18 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/** Controller class "modifyPartController" provides logic for modifyPartView */
+/**
+ * Controller class "modifyPartController" provides logic for modifyPartView.
+ */
 public class modifyPartController implements Initializable {
     private int selectedIndex;
+    /**radio button for inhouse selection.*/
     public RadioButton inHouseRadioButton;
+    /**radio button for outsourced selection.*/
     public RadioButton outsourcedRadioButton;
     @FXML
     private ToggleGroup toggleGroup;
+    /**modify part view identified.*/
     @FXML
     public AnchorPane modifyPartPane;
     private mainController mainController; // Reference to the main controller
@@ -40,7 +45,7 @@ public class modifyPartController implements Initializable {
     @FXML private TextField partLastField;
     @FXML private Part selectedPart;
 
-
+    /** lastLabel used to change test in accordance with user selection of inohuse or outsourced.*/
     public Label lastLabel;
     /** This method will change the text of the in correspondence with the radio buttons
      */

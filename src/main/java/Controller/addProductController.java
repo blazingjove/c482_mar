@@ -14,8 +14,12 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-/** Controller class "addProductController" provides logic for addProductView */
+/**
+ * Controller class "addProductController" provides logic for addProductView.
+ * see initialize at the end of code for code that is executed on opening view.
+ */
 public class addProductController implements Initializable {
+    /**Identifies the addProduct view*/
     @FXML
     public AnchorPane addProductPane;
     private mainController mainController; // Reference to the main controller

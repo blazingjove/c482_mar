@@ -17,7 +17,9 @@ import java.util.ResourceBundle;
 import javafx.scene.Scene;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-/** Controller class "mainController" provides logic for the main view of the application. */
+/**
+ * Controller class "mainController" provides logic for the main view of the application.
+ */
 public class mainController implements Initializable {
     // blow is the logic to exit main view when exit button is hit
     @FXML

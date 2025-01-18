@@ -9,15 +9,21 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/** Controller class "addPartController" provides logic for addPartView */
+/**
+ * Controller class "addPartController" provides logic for addPartView.
+ */
 public class addPartController implements Initializable {
+    /**identifies the addPart view*/
     @FXML
     public AnchorPane addPartPane;
+    /** referance to main controller*/
     private mainController mainController; // Reference to the main controller
     //FXML for toggleGroup so that one radio button  selected at a time
     @FXML
     private ToggleGroup toggleGroup;
+    /**creates radio button called inHouseRadioButton*/
     public RadioButton inHouseRadioButton;
+    /**creates radio button called outsourcedRadioButton*/
     public RadioButton outsourcedRadioButton;
 
     /** identifies the main controller*/
@@ -32,6 +38,7 @@ public class addPartController implements Initializable {
     @FXML private TextField partMaxField;
     @FXML private TextField partMinField;
     @FXML private TextField partLastField;
+    /**creates the last lable that will be used to manipulate the last field according to radiobutton selected*/
     public Label lastLabel;
 
     /** the method onRadioButtonSelected is the logic to change the label to show that the add part being added is an in-house or outsourced item
